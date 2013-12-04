@@ -30,4 +30,7 @@ class Extruder(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	def get_material_name(self):
+		m = Material.objects.get(pk=self.material)
+		return m.name
 

@@ -1,0 +1,13 @@
+<h1>{{ printer.name }}</h1>
+
+<p>Current state: {{printer.state}}</p>
+<p>Percent Complete: {{printer.percent_complete}}%</p>
+
+{% if extruders %}
+<h2> Extruders </h2>
+<ul>
+  {% for e in extruders %}
+    <li>{{e.name}} using {{e.material.name}}</li>
+  {% endfor %}
+</ul>
+{% endif %}

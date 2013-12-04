@@ -1,0 +1,9 @@
+{% if printer_list %}
+  <ul>
+  {% for printer in printer_list %}
+    <li><a href="/print/printer/{{ printer.id }}/">{{ printer.name }}</li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No printers available.<p>
+{% endif %}
