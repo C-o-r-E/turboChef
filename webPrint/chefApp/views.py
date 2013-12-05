@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
-from chefApp.models import Printer, Extruder, Material
+from chefApp.models import Printer, Extruder, Material, CADFile
+from chefApp.forms import CADForm
 
 class IndexView(generic.ListView):
     template_name = 'chefApp/index.html'
@@ -10,6 +11,13 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return Printer.objects.all()
+
+class FileListView(generic.ListView):
+    template_name = 'chefApp/file_list.html'
+    context_object_name = 'file_list'
+
+    def get_queryset(self):
+        return CADFile.objects.all()
 
 def printerDetails(request, printer_id):
     detail_printer = get_object_or_404(Printer, pk=printer_id)
@@ -24,3 +32,10 @@ def printerDetails(request, printer_id):
             'printer' : detail_printer,
             'extruders' : related_extruder_list,
             })
+
+
+def upload(request):
+    if request.method == 'POST':
+        form = CADForm(request.POST, request.FILES)
+        if form.is_valid():
+            

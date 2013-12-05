@@ -30,7 +30,10 @@ class Extruder(models.Model):
 	def __unicode__(self):
 		return self.name
 
-	def get_material_name(self):
-		m = Material.objects.get(pk=self.material)
-		return m.name
-
+class CADFile(models.Model):
+	name = models.CharField(max_length=100)
+	full_path = model.CharField(max_length=200)
+	status_msg = model.CharField(max_length=200)
+	path_to_gcode = model.CharField(max_lenth=200)
+	upload_time = models.DateTimeField('Uploaded at')
+	cadfile = models.FileField(upload_to='cad_files/%Y/%m/%d')
