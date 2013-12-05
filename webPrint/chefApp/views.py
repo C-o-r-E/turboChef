@@ -1,6 +1,9 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, render_to_response
 from django.views import generic
+from django.template import RequestContext
+from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 from chefApp.models import Printer, Extruder, Material, CADFile
 from chefApp.forms import CADForm
@@ -18,6 +21,8 @@ class FileListView(generic.ListView):
 
     def get_queryset(self):
         return CADFile.objects.all()
+
+FileListView.plain_view = staticmethod(FileListView.as_view())
 
 def printerDetails(request, printer_id):
     detail_printer = get_object_or_404(Printer, pk=printer_id)
@@ -38,4 +43,22 @@ def upload(request):
     if request.method == 'POST':
         form = CADForm(request.POST, request.FILES)
         if form.is_valid():
+            newCAD = CADFile(
+                cadfile = request.FILES['cadfile'],
+                name = request.FILES['cadfile'].name,
+                file_size = request.FILES['cadfile'].size,
+                upload_time = timezone.now()
+                )
+            newCAD.save()
+
+        return HttpResponseRedirect(reverse(FileListView.plain_view))
+
+    else:
+        form = CADForm()
+
+    return render_to_response(
+        'chefApp/file_upload.html',
+        {'form': form},
+        context_instance = RequestContext(request)
+        )
             

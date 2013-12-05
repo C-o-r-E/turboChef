@@ -32,8 +32,12 @@ class Extruder(models.Model):
 
 class CADFile(models.Model):
 	name = models.CharField(max_length=100)
-	full_path = model.CharField(max_length=200)
-	status_msg = model.CharField(max_length=200)
-	path_to_gcode = model.CharField(max_lenth=200)
+	file_size = models.IntegerField(default=0)
+	full_path = models.CharField(max_length=200)
+	status_msg = models.CharField(max_length=200)
+	path_to_gcode = models.CharField(max_length=200)
 	upload_time = models.DateTimeField('Uploaded at')
 	cadfile = models.FileField(upload_to='cad_files/%Y/%m/%d')
+
+	def __unicode__(self):
+		return self.name
