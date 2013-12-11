@@ -5,6 +5,8 @@ from django.template import RequestContext
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
+from django.views.decorators.csrf import csrf_exempt
+
 from chefApp.models import Printer, Extruder, Material, CADFile
 from chefApp.forms import CADForm
 
@@ -38,7 +40,7 @@ def printerDetails(request, printer_id):
             'extruders' : related_extruder_list,
             })
 
-
+@csrf_exempt
 def upload(request):
     if request.method == 'POST':
         form = CADForm(request.POST, request.FILES)
