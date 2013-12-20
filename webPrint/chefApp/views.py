@@ -10,6 +10,10 @@ from django.views.decorators.csrf import csrf_exempt
 from chefApp.models import Printer, Extruder, Material, CADFile
 from chefApp.forms import CADForm
 
+from chefApp.slice import sliceThread
+
+from threading import Thread
+
 class IndexView(generic.ListView):
     template_name = 'chefApp/index.html'
     context_object_name = 'printer_list'
@@ -53,6 +57,9 @@ def upload(request):
                 )
             newCAD.save()
 
+            newThread = Thread(target=sliceMan, args=(newCAD,)) #need to make sure this wont get GCd
+            newThread.start()
+
         return HttpResponseRedirect(reverse(FileListView.plain_view))
 
     else:
@@ -64,3 +71,9 @@ def upload(request):
         context_instance = RequestContext(request)
         )
             
+
+
+###### Maybe doesnt belong here
+
+def sliceMan(stlFile):
+            print "sliceMan: %s" % stlFile.name
