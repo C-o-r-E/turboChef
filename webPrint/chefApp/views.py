@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from chefApp.models import Printer, Extruder, Material, CADFile
 from chefApp.forms import CADForm
 
-from chefApp.slice import sliceThread
+from chefApp.slice import sliceMan
 
 from threading import Thread
 
@@ -70,10 +70,4 @@ def upload(request):
         {'form': form},
         context_instance = RequestContext(request)
         )
-            
 
-
-###### Maybe doesnt belong here
-
-def sliceMan(stlFile):
-            print "sliceMan: %s" % stlFile.name
