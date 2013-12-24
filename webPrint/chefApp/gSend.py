@@ -1,9 +1,8 @@
 import sys
 import time
+from chefApp.models import Printer
 
-
-
-
+cptr = None
 
 #############
 # Callbacks
@@ -16,7 +15,13 @@ def replycb(data):
 	print "reply--> " + data
 
 	if p.queueindex > 0: 
-		print "%f complete" % (100 * float(p.queueindex) / len(p.mainqueue)) 
+                pcnt = (100 * float(p.queueindex) / len(p.mainqueue)) 
+		print "%f complete" % pcnt
+
+                if cptr != None:
+                        cptr.state = "Printing"
+                        cptr.percent_complete = pcnt
+                        cptr.save()
 
 
 def printGcodeFile(path_to_file):
@@ -26,6 +31,12 @@ def printGcodeFile(path_to_file):
 
         #for testing
         path_to_file = "/home/corey/test1.gcode"
+
+        #default printer
+        plist = Printer.objects.all()
+        
+        if(len(plist) > 0):
+                cptr = plist[0]
 
         try:
                 #print "printing gcode for " + path_to_file
