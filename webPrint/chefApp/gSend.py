@@ -3,6 +3,7 @@ import time
 from chefApp.models import Printer
 
 cptr = None
+elec = None
 
 #############
 # Callbacks
@@ -14,7 +15,7 @@ def errorcb(data):
 def replycb(data):
 	print "reply--> " + data
 
-	if p.queueindex > 0: 
+	if elec.queueindex > 0: 
                 pcnt = (100 * float(p.queueindex) / len(p.mainqueue)) 
 		print "%f complete" % pcnt
 
@@ -42,15 +43,15 @@ def printGcodeFile(path_to_file):
                 #print "printing gcode for " + path_to_file
                 gcFile = open(path_to_file, "rU")
 
-                p=printcore.printcore('/dev/ttyUSB0', 115200)
-                p.recvcb = replycb
-                p.errorcb = errorcb 
+                elec=printcore.printcore('/dev/ttyUSB0', 115200)
+                elec.recvcb = replycb
+                elec.errorcb = errorcb 
                 
                 time.sleep(1)
                 
                 gcode = gcoder.GCode(gcFile)
                 
-                p.startprint(gcode)                
+                elec.startprint(gcode)                
                 print "done printing?"
 
         except IOError:
