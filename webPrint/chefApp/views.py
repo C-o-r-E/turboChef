@@ -44,6 +44,12 @@ def printerDetails(request, printer_id):
             'extruders' : related_extruder_list,
             })
 
+#this should be done with a post
+def doPrint(request, file_id):
+    file2print = get_object_or_404(CADFile, pk=file_id)
+    
+    return render(request, 'chefApp/print.html', { 'file' : file2print, })
+
 @csrf_exempt
 def upload(request):
     if request.method == 'POST':

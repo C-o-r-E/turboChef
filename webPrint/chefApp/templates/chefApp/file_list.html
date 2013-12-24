@@ -5,11 +5,11 @@
         <title>File List</title>   
     </head>
     <body>
-    <!-- List of uploaded documents -->
+    <!-- List of uploaded files -->
     {% if file_list %}
         <ul>
         {% for f in file_list %}
-            <li><a href="{{ f.cadfile.url }}">{{ f.cadfile.name }}</a></li>
+            <li><a href="{{ f.cadfile.url }}">{{ f.cadfile.name }}</a> &emsp; <a href="/print/printFile/{{ f.id }}/">PRINT</a></li>
         {% endfor %}
         </ul>
     {% else %}
