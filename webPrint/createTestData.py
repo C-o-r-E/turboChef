@@ -1,9 +1,5 @@
-import os
 from chefApp.models import Printer
 from django.utils import timezone
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'chefApp.settings'
-
 
 #create a new printer
 p = Printer(name='testPrinter01')
