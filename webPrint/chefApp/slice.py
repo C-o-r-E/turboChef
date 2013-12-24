@@ -4,11 +4,12 @@ from time import sleep
 from django.conf import settings
 import subprocess
 
-sliceFail = False
+
 
 #Function for managing slicing
 def sliceMan(stlFile):
-    #print "sliceMan: %s" % stlFile.name
+    sliceFail = False
+
     stlFile.status_msg = "Uploaded: Waiting for slicing..."
     stlFile.full_path = stlFile.cadfile.path
     stlFile.path_to_gcode = settings.GCODE_PATH + stlFile.name + '.gcode'

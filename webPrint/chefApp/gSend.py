@@ -31,7 +31,7 @@ def printGcodeFile(path_to_file):
                 #print "printing gcode for " + path_to_file
                 gcFile = open(path_to_file, "rU")
 
-                p=printcore('/dev/ttyUSB0', 115200)
+                p=printcore.printcore('/dev/ttyUSB0', 115200)
                 p.recvcb = replycb
                 p.errorcb = errorcb 
                 
