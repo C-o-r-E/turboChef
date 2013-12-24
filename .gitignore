@@ -1,3 +1,13 @@
+#printrun
+Printrun
+
+#media
+media
+
+# Database
+*.sqlite3
+
+#python compilation
 *.py[cod~]
 
 # C extensions
