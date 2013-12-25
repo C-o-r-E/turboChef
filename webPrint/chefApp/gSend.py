@@ -12,10 +12,10 @@ class gcSender:
         # Callbacks
         #############
 
-        def errorcb(data):
+        def errorcb(self, data):
                 print "error--> " + data
                 
-        def replycb(data):
+        def replycb(self, data):
                 print "reply--> " + data
                 
                 if device == None:
@@ -32,7 +32,7 @@ class gcSender:
                 else:
                         print "q index = %d" % elec.queueindex
 
-        def printGcodeFile(path_to_file):
+        def printGcodeFile(self, path_to_file):
                 sys.path.insert(0, '/home/corey/git/Printrun')
                 from printrun import gcoder
                 from printrun import printcore
@@ -51,8 +51,8 @@ class gcSender:
                         gcFile = open(path_to_file, "rU")
                         
                         device=printcore.printcore('/dev/ttyUSB0', 115200)
-                        device.recvcb = replycb
-                        device.errorcb = errorcb 
+                        device.recvcb = self.replycb
+                        device.errorcb = self.errorcb 
                         
                         time.sleep(1)
                         
