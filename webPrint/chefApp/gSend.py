@@ -22,7 +22,7 @@ class gcSender:
                         print "device is not defined"
                         
                 if elec.queueindex > 0: 
-                        current_printer = (100 * float(elec.queueindex) / len(elec.mainqueue)) 
+                        pcnt = (100 * float(elec.queueindex) / len(elec.mainqueue)) 
                         print "%f complete" % pcnt
                                 
                         if current_printer != None:
