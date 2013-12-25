@@ -2,62 +2,65 @@ import sys
 import time
 from chefApp.models import Printer
 
-cptr = None
-elec = None
 
-#############
-# Callbacks
-#############
+#TODO: make this a singleton
+class gcSender:
+        current_printer = None
+        device = None
 
-def errorcb(data):
-	print "error--> " + data
+        #############
+        # Callbacks
+        #############
 
-def replycb(data):
-	print "reply--> " + data
-
-        if elec == None:
-                print "elec is not defined"
-
-	if elec.queueindex > 0: 
-                pcnt = (100 * float(elec.queueindex) / len(elec.mainqueue)) 
-		print "%f complete" % pcnt
-
-                if cptr != None:
-                        cptr.state = "Printing"
-                        cptr.percent_complete = pcnt
-                        cptr.save()
-        else:
-                print "q index = %d" % elec.queueindex
-
-def printGcodeFile(path_to_file):
-        sys.path.insert(0, '/home/corey/git/Printrun')
-        from printrun import gcoder
-        from printrun import printcore
-
-        #for testing
-        path_to_file = "/home/corey/test1.gcode"
-
-        #default printer
-        plist = Printer.objects.all()
-        
-        if(len(plist) > 0):
-                cptr = plist[0]
-
-        try:
-                #print "printing gcode for " + path_to_file
-                gcFile = open(path_to_file, "rU")
-
-                elec=printcore.printcore('/dev/ttyUSB0', 115200)
-                elec.recvcb = replycb
-                elec.errorcb = errorcb 
+        def errorcb(data):
+                print "error--> " + data
                 
-                time.sleep(1)
+        def replycb(data):
+                print "reply--> " + data
                 
-                gcode = gcoder.GCode(gcFile)
-                
-                elec.startprint(gcode)                
-                print "done printing?"
+                if device == None:
+                        print "device is not defined"
+                        
+                if elec.queueindex > 0: 
+                        current_printer = (100 * float(elec.queueindex) / len(elec.mainqueue)) 
+                        print "%f complete" % pcnt
+                                
+                        if current_printer != None:
+                                current_printer.state = "Printing"
+                                current_printer.percent_complete = pcnt
+                                current_printer.save()
+                else:
+                        print "q index = %d" % elec.queueindex
 
-        except IOError:
-                print "Failed to open gcode file: " + path_to_file
+        def printGcodeFile(path_to_file):
+                sys.path.insert(0, '/home/corey/git/Printrun')
+                from printrun import gcoder
+                from printrun import printcore
+
+                #for testing
+                path_to_file = "/home/corey/test1.gcode"
                 
+                #default printer
+                plist = Printer.objects.all()
+                
+                if(len(plist) > 0):
+                        current_printer = plist[0]
+                        
+                try:
+                        #print "printing gcode for " + path_to_file
+                        gcFile = open(path_to_file, "rU")
+                        
+                        device=printcore.printcore('/dev/ttyUSB0', 115200)
+                        device.recvcb = replycb
+                        device.errorcb = errorcb 
+                        
+                        time.sleep(1)
+                        
+                        gcode = gcoder.GCode(gcFile)
+                        
+                        device.startprint(gcode)                
+                        print "done printing?"
+                        
+                except IOError:
+                        print "Failed to open gcode file: " + path_to_file
+                                

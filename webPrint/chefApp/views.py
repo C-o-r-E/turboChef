@@ -11,7 +11,7 @@ from chefApp.models import Printer, Extruder, Material, CADFile
 from chefApp.forms import CADForm
 
 from chefApp.slice import sliceMan
-from chefApp.gSend import printGcodeFile
+from chefApp.gSend import gcSender
 
 from threading import Thread
 
@@ -49,7 +49,8 @@ def printerDetails(request, printer_id):
 def doPrint(request, file_id):
     file2print = get_object_or_404(CADFile, pk=file_id)
 
-    printThread = Thread(target=printGcodeFile, args=(file2print.path_to_gcode,))
+    gcs = gcSender()
+    printThread = Thread(target=gcs.printGcodeFile, args=(file2print.path_to_gcode,))
     printThread.start()
     
     return render(request, 'chefApp/print.html', { 'file' : file2print, })
