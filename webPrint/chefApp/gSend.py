@@ -15,15 +15,19 @@ def errorcb(data):
 def replycb(data):
 	print "reply--> " + data
 
+        if elec == None:
+                print "elec is not defined"
+
 	if elec.queueindex > 0: 
-                pcnt = (100 * float(p.queueindex) / len(p.mainqueue)) 
+                pcnt = (100 * float(elec.queueindex) / len(elec.mainqueue)) 
 		print "%f complete" % pcnt
 
                 if cptr != None:
                         cptr.state = "Printing"
                         cptr.percent_complete = pcnt
                         cptr.save()
-
+        else:
+                print "q index = %d" % elec.queueindex
 
 def printGcodeFile(path_to_file):
         sys.path.insert(0, '/home/corey/git/Printrun')
