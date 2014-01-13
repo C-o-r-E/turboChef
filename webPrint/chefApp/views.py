@@ -4,6 +4,7 @@ from django.views import generic
 from django.template import RequestContext
 from django.utils import timezone
 from django.core.urlresolvers import reverse
+from django.core import serializers
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -30,6 +31,15 @@ class FileListView(generic.ListView):
         return CADFile.objects.all()
 
 FileListView.plain_view = staticmethod(FileListView.as_view())
+
+def api_file_list(request):
+    api_data = serializers.serialize("json", Printer.objects.all())
+    return HttpResponse(api_data, content_type="application/json")
+    
+
+def api_printer_list(request):
+    api_data = serializers.serialize("json", CADFile.objects.all(), fields=('name', 'file_size', 'status_msg'))
+    return HttpResponse(api_data, content_type="application/json")
 
 def printerDetails(request, printer_id):
     detail_printer = get_object_or_404(Printer, pk=printer_id)
