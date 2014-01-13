@@ -32,12 +32,12 @@ class FileListView(generic.ListView):
 
 FileListView.plain_view = staticmethod(FileListView.as_view())
 
-def api_file_list(request):
+def api_printer_list(request):
     api_data = serializers.serialize("json", Printer.objects.all())
     return HttpResponse(api_data, content_type="application/json")
     
 
-def api_printer_list(request):
+def api_file_list(request):
     api_data = serializers.serialize("json", CADFile.objects.all(), fields=('name', 'file_size', 'status_msg'))
     return HttpResponse(api_data, content_type="application/json")
 
