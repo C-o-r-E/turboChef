@@ -11,10 +11,10 @@ urlpatterns = patterns('',
                        url(r'^upload/$', views.upload, name='upload'),
 
                        #API
-                       #url(r'api/', views., name='api_'),
-                       url(r'api/$', views.api_handle_post, name='api_post'),
-                       url(r'api/files/$', views.api_file_list, name='api_files'),
-                       url(r'api/printers/$', views.api_printer_list, name='api_printers'),
+                       #url(r'^api/', views., name='api_'),
+                       url(r'^api/$', views.api_handle_post, name='api_post'),
+                       url(r'^api/files/$', views.api_file_list, name='api_files'),
+                       url(r'^api/printers/$', views.api_printer_list, name='api_printers'),
 
 
 )

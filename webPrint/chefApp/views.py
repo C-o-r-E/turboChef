@@ -43,6 +43,7 @@ def api_file_list(request):
     api_data = serializers.serialize("json", CADFile.objects.all(), fields=('name', 'file_size', 'status_msg'))
     return HttpResponse(api_data, content_type="application/json")
 
+@csrf_exempt
 def api_handle_post(request):
     if request.method == 'POST':
         file_id = request.POST['file_id']
