@@ -45,14 +45,12 @@ def api_file_list(request):
 
 def api_handle_post(request):
     if request.method == 'POST':
-
         file_id = request.POST['file_id']
         printer_id = request.POST['printer_id']
         
         api_response = {}
         api_response['status'] = "testing (file=%s, printer=%s)" % (file_id, printer_id)
         api_response['err'] = ''
-
         return HttpResponse(json.dumps(api_response), content_type="application/json")
         
     else:
