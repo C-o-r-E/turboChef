@@ -1,10 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render, render_to_response
 from django.views import generic
 from django.template import RequestContext
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.core import serializers
+import json
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -40,6 +42,21 @@ def api_printer_list(request):
 def api_file_list(request):
     api_data = serializers.serialize("json", CADFile.objects.all(), fields=('name', 'file_size', 'status_msg'))
     return HttpResponse(api_data, content_type="application/json")
+
+def api_handle_post(request):
+    if request.method == 'POST':
+
+        file_id = request.POST['file_id']
+        printer_id = request.POST['printer_id']
+        
+        api_response = {}
+        api_response['status'] = "testing (file=%s, printer=%s)" % (file_id, printer_id)
+        api_response['err'] = ''
+
+        return HttpResponse(json.dumps(api_response), content_type="application/json")
+        
+    else:
+        raise Http404
 
 def printerDetails(request, printer_id):
     detail_printer = get_object_or_404(Printer, pk=printer_id)
