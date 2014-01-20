@@ -65,7 +65,7 @@
 
           {% for f in file_list %}
 	  <tr>
-            <td><a href="{{ f.cadfile.url }}">{{ f.cadfile.name }}</a></td>
+            <td><a href="{{ f.cadfile.url }}">{{ f.name }}</a></td>
 	    <td>{{ f.file_size }}</td>
 	    <td><a href="/print/printFile/{{ f.id }}/">PRINT</a></td>
 	  </tr>
