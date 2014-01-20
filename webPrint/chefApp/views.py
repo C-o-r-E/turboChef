@@ -50,7 +50,7 @@ def api_handle_post(request):
         printer_id = request.POST['printer_id']
         
         api_response = {}
-        api_response['status'] = "testing (file=%s, printer=%s)" % (file_id, printer_id)
+        api_response['status'] = "Got command to print file on printer (file=%s, printer=%s)" % (file_id, printer_id)
         api_response['err'] = ''
         return HttpResponse(json.dumps(api_response), content_type="application/json")
         
