@@ -73,13 +73,20 @@ def printerDetails(request, printer_id):
 
 #this should be done with a post
 def doPrint(request, file_id):
+    err = None
     file2print = get_object_or_404(CADFile, pk=file_id)
 
-    gcs = gcSender()
-    printThread = Thread(target=gcs.printGcodeFile, args=(file2print.path_to_gcode,))
-    printThread.start()
+    if "Error" in file2print.status_msg:
+        #give an error back
+        err = file2print.status_msg
+
+    else:
+        gcs = gcSender()
+        printThread = Thread(target=gcs.printGcodeFile, args=(file2print.path_to_gcode,))
+        printThread.start()
+
     
-    return render(request, 'chefApp/print.html', { 'file' : file2print, })
+    return render(request, 'chefApp/print.html', { 'file' : file2print, 'err' : err })
 
 @csrf_exempt
 def upload(request):
