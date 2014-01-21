@@ -83,8 +83,8 @@ def doPrint(request, file_id):
     else:
         gcs = gcSender()
         printThread = Thread(target=gcs.printGcodeFile, args=(file2print.path_to_gcode,))
-        printThread.start()
-
+        #printThread.start()
+        print "Not starting print thread - disbled in source"
     
     return render(request, 'chefApp/print.html', { 'file' : file2print, 'err' : err })
 
