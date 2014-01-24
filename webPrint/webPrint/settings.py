@@ -62,13 +62,13 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = '/home/corey/git/turboChef/webPrint/webPrint/media/'
+MEDIA_ROOT = '/home/c-o-r-e/git/turboChef/webPrint/webPrint/media/'
 
 ##################################
 # custom stuff for the chef
 ##################################
-GCODE_PATH = '/home/corey/git/turboChef/webPrint/webPrint/gcode/'
-SLIC3R_PATH = '/home/corey/git/Slic3r/slic3r.pl'
+GCODE_PATH = '/home/c-o-r-e/git/turboChef/webPrint/webPrint/gcode/'
+SLIC3R_PATH = '/home/c-o-r-e/git/Slic3r/slic3r.pl'
 
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -134,7 +134,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 
-    "/home/corey/git/turboChef/webPrint/chefApp/templates",
+    "/home/c-o-r-e/git/turboChef/webPrint/chefApp/templates",
 )
 
 

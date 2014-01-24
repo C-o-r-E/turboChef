@@ -1,20 +1,27 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>File Upload</title>   
-    </head>
-    <body>
-        <!-- Upload form. Note enctype attribute! -->
-        <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
-            {#csrf_token #}
-            <p>{{ form.non_field_errors }}</p>
-            <p>{{ form.cadfile.label_tag }} {{ form.cadfile.help_text }}</p>
-            <p>
-                {{ form.cadfile.errors }}
-                {{ form.cadfile }}
-            </p>
-            <p><input type="submit" value="Upload" /></p>
-        </form>
-    </body>
-</html>
+{% extends "chefApp/index.html" %}
+
+{% block title %}WebPrint -- File upload{% endblock %}
+
+{% block navbar %}
+<li><a href="{% url 'index'%}">Printers</a></li>
+<li><a href="{% url 'fileList'%}">Files</a></li>
+<li class="active"><a href="{% url 'upload' %}">Upload</a></li>
+{% endblock %}
+
+{% block content %}
+
+<!-- Upload form. Note enctype attribute! -->
+<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data" role="form">
+  <div calss="form-group"> 
+    {#csrf_token #}
+    <p>{{ form.non_field_errors }}</p>
+    <p>{{ form.cadfile.label_tag }} {{ form.cadfile.help_text }}</p>
+    <p>
+      {{ form.cadfile.errors }}
+      {{ form.cadfile }}
+    </p>
+    <p><input type="submit" value="Upload" /></p>
+  </div>
+</form>
+
+{% endblock %}
