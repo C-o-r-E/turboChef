@@ -9,6 +9,7 @@ urlpatterns = patterns('',
                        url(r'^files/$', views.FileListView.plain_view, name='fileList'),
                        #url(r'^files/(?P<file_id>\d+)/$', ), #for dev only //// insecure
                        url(r'^upload/$', views.upload, name='upload'),
+                       url(r'^config/$', views.config, name='config'),
 
                        #API
                        #url(r'^api/', views., name='api_'),

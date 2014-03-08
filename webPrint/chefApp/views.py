@@ -115,3 +115,16 @@ def upload(request):
         context_instance = RequestContext(request)
         )
 
+
+
+def config(request):
+    messages = ["this is a test msg...", "also this"]
+    if request.method == 'POST':
+        #handle post
+        None
+    else:
+        #get list of printers
+        printer_list = Printer.objects.all()
+
+    return render(request, 'chefApp/config.html', { 'messages' : messages, 'printer_list' : printer_list })
+
